@@ -21,10 +21,10 @@ jp(opts, cb, PORT);
 var opts = {
   tag : "</head>" // Default: </body>
 , payload : fs.readFileSync("payload.js", "utf8")
-
 }
 
-var cb = function(req, res, next){
+var cb = function(req, res){
+ // This function is called for urls prefixed with _jelly
 }
 
 
