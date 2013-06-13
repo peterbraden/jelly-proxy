@@ -20,7 +20,6 @@ module.exports = function createServer(opts, cb, port){
   }
 
   var server  = http.createServer(function (req, res) {
-    console.log("!!!!!", req.url)
     var ip = req.connection.remoteAddress;
     var uri = url.parse(req.url, true);
 
@@ -52,7 +51,6 @@ module.exports = function createServer(opts, cb, port){
         , headers: headers
         }
         , function getProxyRequest(proxyResponse){
-          console.log("!! proxy req", proxyResponse);
 
           proxyRequest.on("error", function (e) {
             if (!res._header) {
@@ -69,7 +67,6 @@ module.exports = function createServer(opts, cb, port){
             res.write(chunk, 'binary');
           })
           proxyResponse.on("end", function(){
-            console.log("!! PROXY END")
             res.end()
           })
        })
