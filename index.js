@@ -68,19 +68,11 @@ module.exports = function createServer(opts, cb, port){
             chunk = deployPayload(proxyResponse, chunk)
             res.write(chunk, 'binary');
           })
-/*
-          proxyRequest.addListener("response", function (response) {
-             if (response.headers['content-type'] &&
-              response.headers['content-type'].indexOf("text/html") != -1) {
-               delete response.headers['content-length'];
-             }
-             res.writeHead(response.statusCode, response.headers);
-             response.addListener("end", function () {
-               res.end();
-             })
-            })
-*/
+          proxyResponse.on("end", function(){
+            console.log("!! PROXY END")
+            res.end()
           })
+       })
       req.pipe(proxyRequest);
     } // End if _jelly
   }) // End createServer
