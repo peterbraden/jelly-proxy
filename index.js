@@ -12,8 +12,14 @@ module.exports = function createServer(opts, cb, port){
     // modify the html content
     if (resp.headers['content-type'] && resp.headers['content-type'].indexOf("text/html") != -1) {
       var tag = opts.tag || DEFAULTS.tag
+        , payload = opts.payload || DEFAULTS.payload
+  
+      if (typeof(payload) == 'function'){
+        payload = payload();
+      }
+        
       if (chunk.toString().indexOf(tag)){
-        chunk = chunk.toString().replace(tag, (opts.payload || DEFAULTS.payload) + tag);
+        chunk = chunk.toString().replace(tag, payload + tag);
       }
     }
     return chunk
