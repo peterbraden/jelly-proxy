@@ -1,6 +1,6 @@
 {
   "name": "jelly-proxy",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Proxy that adds a payload to html pages",
   "main": "index.js",
   "scripts": {
