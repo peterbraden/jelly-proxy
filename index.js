@@ -26,13 +26,17 @@ module.exports = function createServer(opts, cb, port){
   }
 
   var server  = http.createServer(function (req, res) {
+    if (opts.logger){
+      opts.logger(req);
+    }
+
     var ip = req.connection.remoteAddress;
     var uri = url.parse(req.url, true);
 
     var pathname = uri.search ? uri.pathname + uri.search : uri.pathname;
-
-    if (pathname.indexOf("_jelly") == 0){
+    if (pathname.indexOf("_jelly") == 0 || pathname.indexOf("/_jelly") == 0){
       // Special Case URL : Call the callback and let them deal with it...
+      return cb(req, res);
 
     } else {
       // Actual proxying happens here
@@ -49,6 +53,7 @@ module.exports = function createServer(opts, cb, port){
           headers[h]=_this.default_headers[h];
         }
 
+      var _port = uri.port
        var proxyRequest = http.request({
           port: port
         , hostname: uri.hostname
